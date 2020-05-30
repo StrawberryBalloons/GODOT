@@ -106,6 +106,8 @@ User: vector force based movement
 User: Mining and placing
 User: Physics Manipulation (shapes and vectors)
 Callum: should probably make some diagrams to explain ideas better
+World: area of effect and causality
+Creatures: soft bodied components: conductor, passive, blocker, defense etc
 
 
 
