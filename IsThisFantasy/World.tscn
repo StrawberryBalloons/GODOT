@@ -1,0 +1,65 @@
+[gd_scene format=2]
+
+[node name="World" type="Node"]
+
+[node name="MeshCreator" type="Node" parent="."]
+
+[node name="TerrainMap" type="Node" parent="MeshCreator"]
+
+[node name="3dNoiseMap" type="Node" parent="MeshCreator/TerrainMap"]
+
+[node name="Heightmap" type="Node" parent="MeshCreator/TerrainMap"]
+
+[node name="Depth" type="Node" parent="MeshCreator/TerrainMap"]
+
+[node name="BiomeType" type="Node" parent="MeshCreator/TerrainMap"]
+
+[node name="Physics" type="Node" parent="."]
+
+[node name="Gravity" type="Node" parent="Physics"]
+
+[node name="Density" type="Node" parent="Physics"]
+
+[node name="Pressure" type="Node" parent="Physics"]
+
+[node name="Friction" type="Node" parent="Physics"]
+
+[node name="Force" type="Node" parent="Physics"]
+
+[node name="User" type="Node" parent="."]
+
+[node name="Stats" type="Node" parent="User"]
+
+[node name="AOE" type="Node" parent="User"]
+
+[node name="Actions" type="Node" parent="User"]
+
+[node name="Move" type="Node" parent="User/Actions"]
+
+[node name="Swing" type="Node" parent="User/Actions"]
+
+[node name="Place" type="Node" parent="User/Actions"]
+
+[node name="Interact" type="Node" parent="User/Actions"]
+
+[node name="UI" type="Node" parent="User"]
+
+[node name="Creature" type="Node" parent="."]
+
+[node name="Behaviours" type="Node" parent="Creature"]
+
+[node name="Fight" type="Node" parent="Creature/Behaviours"]
+
+[node name="Flight" type="Node" parent="Creature/Behaviours"]
+
+[node name="Hide" type="Node" parent="Creature/Behaviours"]
+
+[node name="Forage" type="Node" parent="Creature/Behaviours"]
+
+[node name="Hunt" type="Node" parent="Creature/Behaviours"]
+
+[node name="Body" type="Node" parent="Creature"]
+
+[node name="Stats" type="Node" parent="Creature"]
+
+[node name="Plant" type="Node" parent="."]
