@@ -6,6 +6,8 @@ rendering
 noise (simplex?)
 optimisation
 materials
+depth
+type
 
 the gist:
 Point voxels are a method of drawing intricate 3d worlds, however,
@@ -28,7 +30,6 @@ correctly, should make the terrain incredibly optimised.
 The downside of this method is that materials do not interact well
 with composite meshes, a possible fix is to make a series of meshes
 grouped by material, or, it can be handled by a shader.
-
 
 Forces and Density:
 To move through air or on land requires several components:
@@ -91,3 +92,28 @@ create the ability to instantly travel between two points by traversing
 across local spaces. Similar to what happens on the edge of a black
 hole in reality
 
+Ideas and addendum:
+Creatures: generated initially from successful GA based on worlds physics
+Creatures: Some based on design
+Creatures: Basic AI
+Creatures: Stats to drive AI
+World: Different biomes
+World: Trees, flowers and other plant life (object pooling?) can use L-system I think
+World: Realistic Growth and propagation
+World: Vector matrix based weather (I am sure there is an algorithm for this, similar to perlin, but more ordered)
+User: A UI interface with basic stats
+User: vector force based movement
+User: Mining and placing
+User: Physics Manipulation (shapes and vectors)
+Callum: should probably make some diagrams to explain ideas better
+
+
+
+Addendum 1: Noise, Height, Depth and type form a biome system
+Addendum 2: Realtime construction and deconstruction with the mesh
+Addendum 3: No optimal solution for fluid simulation has been though
+up yet
+Addendum 4: Is my idea for mesh creation similar to marching cubes?
+I don't think it is, but if so then it may be worth using that
+Addendum 5: musn't forget the proximity theory you have
+Addendum 6: If doing biomes, overlap and average?
