@@ -48,18 +48,64 @@
 
 [node name="Behaviours" type="Node" parent="Creature"]
 
-[node name="Fight" type="Node" parent="Creature/Behaviours"]
+[node name="Movements" type="Node" parent="Creature/Behaviours"]
 
-[node name="Flight" type="Node" parent="Creature/Behaviours"]
+[node name="Clamp" type="Node" parent="Creature/Behaviours/Movements"]
 
-[node name="Hide" type="Node" parent="Creature/Behaviours"]
+[node name="Swipe" type="Node" parent="Creature/Behaviours/Movements"]
 
-[node name="Forage" type="Node" parent="Creature/Behaviours"]
+[node name="Stab" type="Node" parent="Creature/Behaviours/Movements"]
 
-[node name="Hunt" type="Node" parent="Creature/Behaviours"]
+[node name="Pull" type="Node" parent="Creature/Behaviours/Movements"]
+
+[node name="BehvaiourPriority" type="Node" parent="Creature/Behaviours"]
+
+[node name="Fight" type="Node" parent="Creature/Behaviours/BehvaiourPriority"]
+
+[node name="Flight" type="Node" parent="Creature/Behaviours/BehvaiourPriority"]
+
+[node name="Hide" type="Node" parent="Creature/Behaviours/BehvaiourPriority"]
+
+[node name="Forage" type="Node" parent="Creature/Behaviours/BehvaiourPriority"]
+
+[node name="Hunt" type="Node" parent="Creature/Behaviours/BehvaiourPriority"]
 
 [node name="Body" type="Node" parent="Creature"]
 
+[node name="Segments" type="Node" parent="Creature/Body"]
+
+[node name="SoftBody" type="Node" parent="Creature/Body/Segments"]
+
+[node name="HardBody" type="Node" parent="Creature/Body/Segments"]
+
+[node name="StartSegment" type="Node" parent="Creature/Body/Segments"]
+
 [node name="Stats" type="Node" parent="Creature"]
 
+[node name="HP" type="Node" parent="Creature/Stats"]
+
+[node name="Hunger" type="Node" parent="Creature/Stats"]
+
+[node name="Thirst" type="Node" parent="Creature/Stats"]
+
+[node name="Reproduce" type="Node" parent="Creature/Stats"]
+
 [node name="Plant" type="Node" parent="."]
+
+[node name="LSystem" type="Node" parent="Plant"]
+
+[node name="Branch" type="Node" parent="Plant"]
+
+[node name="Leaf" type="Node" parent="Plant"]
+
+[node name="Weather" type="Node" parent="."]
+
+[node name="Wind" type="Node" parent="Weather"]
+
+[node name="Rain" type="Node" parent="Weather"]
+
+[node name="Snow" type="Node" parent="Weather/Rain"]
+
+[node name="Lightning" type="Node" parent="Weather/Rain"]
+
+[node name="Sun" type="Node" parent="."]
