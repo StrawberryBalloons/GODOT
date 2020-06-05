@@ -1,18 +1,27 @@
-[gd_scene format=2]
+[gd_scene load_steps=5 format=2]
 
-[node name="World" type="Node"]
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Chunk.gd" type="Script" id=2]
+[ext_resource path="res://World.gd" type="Script" id=3]
 
-[node name="MeshCreator" type="Node" parent="."]
+[sub_resource type="CapsuleShape" id=1]
 
-[node name="TerrainMap" type="Node" parent="MeshCreator"]
+[node name="World" type="Spatial"]
+script = ExtResource( 3 )
 
-[node name="3dNoiseMap" type="Node" parent="MeshCreator/TerrainMap"]
+[node name="TerrainMap" type="Node" parent="."]
 
-[node name="Heightmap" type="Node" parent="MeshCreator/TerrainMap"]
+[node name="Noise" type="Node" parent="TerrainMap"]
 
-[node name="Depth" type="Node" parent="MeshCreator/TerrainMap"]
+[node name="Heightmap" type="Node" parent="TerrainMap"]
 
-[node name="BiomeType" type="Node" parent="MeshCreator/TerrainMap"]
+[node name="Depth" type="Node" parent="TerrainMap"]
+
+[node name="BiomeType" type="Node" parent="TerrainMap"]
+
+[node name="Chunk" type="Spatial" parent="TerrainMap"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41848, 0 )
+script = ExtResource( 2 )
 
 [node name="Physics" type="Node" parent="."]
 
@@ -25,24 +34,6 @@
 [node name="Friction" type="Node" parent="Physics"]
 
 [node name="Force" type="Node" parent="Physics"]
-
-[node name="User" type="Node" parent="."]
-
-[node name="Stats" type="Node" parent="User"]
-
-[node name="AOE" type="Node" parent="User"]
-
-[node name="Actions" type="Node" parent="User"]
-
-[node name="Move" type="Node" parent="User/Actions"]
-
-[node name="Swing" type="Node" parent="User/Actions"]
-
-[node name="Place" type="Node" parent="User/Actions"]
-
-[node name="Interact" type="Node" parent="User/Actions"]
-
-[node name="UI" type="Node" parent="User"]
 
 [node name="Creature" type="Node" parent="."]
 
@@ -109,3 +100,32 @@
 [node name="Lightning" type="Node" parent="Weather/Rain"]
 
 [node name="Sun" type="Node" parent="."]
+
+[node name="User" type="Node" parent="."]
+
+[node name="Player" type="KinematicBody" parent="User"]
+script = ExtResource( 1 )
+
+[node name="Stats" type="Node" parent="User/Player"]
+
+[node name="AOE" type="Node" parent="User/Player"]
+
+[node name="Actions" type="Node" parent="User/Player"]
+
+[node name="Move" type="Node" parent="User/Player/Actions"]
+
+[node name="Swing" type="Node" parent="User/Player/Actions"]
+
+[node name="Place" type="Node" parent="User/Player/Actions"]
+
+[node name="Interact" type="Node" parent="User/Player/Actions"]
+
+[node name="UI" type="Node" parent="User/Player"]
+
+[node name="rotation_helper" type="Spatial" parent="User/Player"]
+
+[node name="Camera" type="Camera" parent="User/Player/rotation_helper"]
+
+[node name="CollisionShape" type="CollisionShape" parent="User/Player"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 1 )
