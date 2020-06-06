@@ -6,6 +6,7 @@ var noise
 var x
 var z
 var chunk_size
+var should_remove = true
 
 func _init(noise, x, z, chunk_size):
 	self.noise = noise;
@@ -15,6 +16,7 @@ func _init(noise, x, z, chunk_size):
 
 func _ready():
 	generate_chunk()
+	generate_water()
 	
 func generate_chunk():
 	var plane_mesh = PlaneMesh.new()
@@ -23,6 +25,7 @@ func generate_chunk():
 	plane_mesh.subdivide_width = chunk_size * 0.5
 	
 	#give material
+	plane_mesh.material = preload("res://terrain.material")
 	
 	var surface_tool = SurfaceTool.new()
 	var data_tool = MeshDataTool.new()
@@ -51,5 +54,12 @@ func generate_chunk():
 	mesh_instance.cast_shadow = GeometryInstance.SHADOW_CASTING_SETTING_OFF
 	add_child(mesh_instance)
 	
-	
-	
+func generate_water():
+	var plane_mesh = PlaneMesh.new()
+	plane_mesh.size = Vector2(chunk_size, chunk_size)
+
+	#give material
+	plane_mesh.material = preload("res://water.material")
+	var mesh_instance = MeshInstance.new()
+	mesh_instance.mesh = plane_mesh
+	add_child(mesh_instance)

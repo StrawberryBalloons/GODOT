@@ -1,8 +1,8 @@
 extends KinematicBody
 
-const GRAVITY = -24.8
+const GRAVITY = -9.81
 var vel = Vector3()
-const MAX_SPEED = 20
+const MAX_SPEED = 100
 const JUMP_SPEED = 18
 const ACCEL = 4.5
 
@@ -33,16 +33,17 @@ func process_input(delta):
 	dir = Vector3()
 	var cam_xform = camera.get_global_transform()
 
-	var input_movement_vector = Vector2()
+	var input_movement_vector = Vector3()
 
-	if Input.is_action_pressed("movement_forward"):
+	if Input.is_action_pressed("Movement_forward"):
 		input_movement_vector.y += 1
-	if Input.is_action_pressed("movement_back"):
+	if Input.is_action_pressed("Movement_back"):
 		input_movement_vector.y -= 1
-	if Input.is_action_pressed("movement_left"):
+	if Input.is_action_pressed("Movement_left"):
 		input_movement_vector.x -= 1
-	if Input.is_action_pressed("movement_right"):
+	if Input.is_action_pressed("Movement_right"):
 		input_movement_vector.x += 1
+
 
 	input_movement_vector = input_movement_vector.normalized()
 
@@ -50,7 +51,11 @@ func process_input(delta):
 	dir += -cam_xform.basis.z * input_movement_vector.y
 	dir += cam_xform.basis.x * input_movement_vector.x
 	# ----------------------------------
-
+	# ----------------------------------
+	# Jumping
+	if Input.is_action_just_pressed("Movement_Up"):
+		vel.y = JUMP_SPEED
+	# ----------------------------------
 
 	# ----------------------------------
 	# Capturing/Freeing the cursor
@@ -64,6 +69,9 @@ func process_input(delta):
 func process_movement(delta):
 	dir.y = 0
 	dir = dir.normalized()
+
+	vel.y += delta * GRAVITY
+
 
 	var hvel = vel
 	hvel.y = 0
