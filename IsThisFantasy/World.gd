@@ -8,13 +8,18 @@ var chunks = {}
 var unready_chunks = {}
 var thread
 
-func _ready():
-	randomize()
+func setNoise():
 	noise = OpenSimplexNoise.new()
 	noise.seed = randi()
 	noise.octaves = 6
 	noise.period = 80
-	
+	noise.persistence = 0.8
+	noise.lacunarity = 2
+	return noise
+
+func _ready():
+	randomize()
+	noise = setNoise()
 	thread = Thread.new()
 	
 
