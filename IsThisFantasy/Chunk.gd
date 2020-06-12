@@ -14,15 +14,15 @@ func _init(noise, x, z, chunk_size):
 	self.z = z;
 	self.chunk_size = chunk_size;
 
-#func _ready():
-#	generate_chunk()
-#		generate_water()
+func _ready():
+	generate_chunk()
+	#generate_water()
 	
 func generate_chunk():
 	var plane_mesh = PlaneMesh.new()
 	plane_mesh.size = Vector2(chunk_size, chunk_size)
-	plane_mesh.subdivide_depth = chunk_size * 0.5
-	plane_mesh.subdivide_width = chunk_size * 0.5
+	plane_mesh.subdivide_depth = chunk_size * 0.25
+	plane_mesh.subdivide_width = chunk_size * 0.25
 	
 	#give material
 	plane_mesh.material = preload("res://terrain.material")
@@ -35,9 +35,8 @@ func generate_chunk():
 	
 	for i in range(data_tool.get_vertex_count()):
 		var vertex = data_tool.get_vertex(i)
-		
-		vertex.y = noise.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z) * 80
-		
+		#vertex.y = noise.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z) * 100 #this is where ti magic happens
+		vertex.y = pow(noise.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z) * 10, 2)
 		data_tool.set_vertex(i, vertex)
 	
 	for s in range(array_plane.get_surface_count()):

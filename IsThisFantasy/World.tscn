@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Chunk.gd" type="Script" id=2]
@@ -6,10 +6,15 @@
 [ext_resource path="res://NoiseTex.tres" type="Texture" id=4]
 [ext_resource path="res://Force.gd" type="Script" id=5]
 [ext_resource path="res://Sprite3D.gd" type="Script" id=6]
+[ext_resource path="res://BiomeType.gd" type="Script" id=7]
+[ext_resource path="res://terrain.material" type="Material" id=8]
 
 [sub_resource type="CapsuleShape" id=1]
 
+[sub_resource type="CapsuleMesh" id=2]
+
 [node name="World" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.89467, 0 )
 script = ExtResource( 3 )
 
 [node name="TerrainMap" type="Node" parent="."]
@@ -20,12 +25,14 @@ script = ExtResource( 3 )
 
 [node name="Sprite3D" type="Sprite3D" parent="TerrainMap/Heightmap"]
 transform = Transform( 30, 0, 0, 0, 30, 0, 0, 0, 1, 0.321274, 78.5113, -29.8728 )
+visible = false
 texture = ExtResource( 4 )
 script = ExtResource( 6 )
 
 [node name="Depth" type="Node" parent="TerrainMap"]
 
 [node name="BiomeType" type="Node" parent="TerrainMap"]
+script = ExtResource( 7 )
 
 [node name="Chunk" type="Spatial" parent="TerrainMap"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41848, 0 )
@@ -140,3 +147,7 @@ far = 8192.0
 [node name="CollisionShape" type="CollisionShape" parent="User/Player"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+material/0 = ExtResource( 8 )

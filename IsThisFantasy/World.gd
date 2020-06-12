@@ -11,10 +11,10 @@ var thread
 func setNoise():
 	noise = OpenSimplexNoise.new()
 	noise.seed = randi()
-	noise.octaves = 6
-	noise.period = 80
-	noise.persistence = 0.8
-	noise.lacunarity = 2
+	noise.octaves = 6 # Smooth < jagged (large)
+	noise.period = 196 #spread
+	noise.persistence = 0.43 #length
+	noise.lacunarity = 2 #smooth < jagged (small)
 	return noise
 
 func _ready():

@@ -54,12 +54,12 @@ func process_input(delta):
 	# ----------------------------------
 	# Jumping
 	if Input.is_action_just_pressed("Movement_Up"):
-		vel.y = JUMP_SPEED
+		vel.y += JUMP_SPEED
 	# ----------------------------------
 
 	# Jumping
 	if Input.is_action_just_pressed("movement_Stop"):
-		vel.y = 0
+		vel.y -= JUMP_SPEED
 	# ----------------------------------
 	# ----------------------------------
 	# Capturing/Freeing the cursor
