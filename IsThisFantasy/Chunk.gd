@@ -15,9 +15,10 @@ func _init(noise, x, z, chunk_size):
 	self.chunk_size = chunk_size;
 
 func _ready():
-	generate_chunk()
+	#generate_chunk()
 	#generate_water()
-	
+	pass
+
 func generate_chunk():
 	var plane_mesh = PlaneMesh.new()
 	plane_mesh.size = Vector2(chunk_size, chunk_size)
