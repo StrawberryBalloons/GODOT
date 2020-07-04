@@ -1,0 +1,9 @@
+Plant types:
+
+Daffodil (1 soul) - attracts up to 10 new bees to the garden
+
+Bleeding heart (5 souls) - enrages visiting bees, causing them to attack nearby spiders
+
+Foxglove (10 souls) - attracts 10 new bees to the garden every minute
+
+Lily of the valley (15 souls) - grants immortality to visiting bees
