@@ -12,15 +12,16 @@ var biomeCompat = []
 
 func _ready():
 	initBiomeTable()
-	for x in range(9):
-		print(biomeCompat[x])
+	#for x in range(9):
+		#print(biomeCompat[x])
 	
 	var array2D = [] # Makes a 2d Array
+	
 	for i in range(height):
 		array2D.append([])
 		for j in range(width):
 			array2D.append(0)
-	
+	pass
 	#print(array2D) # prints entire array
 
 func initBiomeTable():

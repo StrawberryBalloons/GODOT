@@ -17,7 +17,7 @@ func _ready():
 	#generate()
 	#erode(cycles)
 	#grow()
-	
+	pass
 
 
 func generate():

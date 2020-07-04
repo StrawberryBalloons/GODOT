@@ -106,7 +106,7 @@ func flood(h, p, dim):
 		var drainfound = false
 		
 		var i
-		var fill = i
+		var _fill = i
 		#open curly for fill
 		if(i < 0 || i >= size):
 			return
@@ -144,21 +144,21 @@ func flood(h, p, dim):
 			var drainage = 0.001
 			plane = (1.0-drainage)*initialplane + drainage*(h[drain] + p[drain])
 			
-			for i in range(set):
+			for _i in range(set):
 				#p[s] = (plane > h[s])?(plane-h[s]):0.0
 				
 				sediment *= 0.1
 				break
 			
-			var tvol = 0.0
-			for i in range(set):
-				tVol += volumeFactor*(plane - (h[s] + p[s]))
+			var tVol = 0.0
+			for _i in range(set):
+				#tVol += volumeFactor*(plane - (h[s] + p[s]))
 				
 				if(tVol <= volume && initialplane < plane):
-					for i in range(set):
-						p[s] = plane - h[s]
+					for _i in range(set):
+						#p[s] = plane - h[s]
 						
-						volume -= tvol
+						volume -= tVol
 						tVol = 0.0
 				else:
 					fail = fail - 1

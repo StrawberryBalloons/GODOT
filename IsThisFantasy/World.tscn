@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Chunk.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://terrain.material" type="Material" id=8]
 [ext_resource path="res://Terrain.gd" type="Script" id=9]
 [ext_resource path="res://Water.gd" type="Script" id=10]
+[ext_resource path="res://L-system.gd" type="Script" id=11]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -25,7 +26,6 @@ script = ExtResource( 3 )
 
 [node name="Sprite3D" type="Sprite3D" parent="TerrainMap/Heightmap"]
 transform = Transform( 30, 0, 0, 0, 30, 0, 0, 0, 1, 0.321274, 78.5113, -29.8728 )
-visible = false
 texture = ExtResource( 4 )
 script = ExtResource( 6 )
 
@@ -43,16 +43,6 @@ script = ExtResource( 9 )
 
 [node name="Water" type="Spatial" parent="TerrainMap/Hydrology"]
 script = ExtResource( 10 )
-
-[node name="Weather" type="Node" parent="."]
-
-[node name="Wind" type="Node" parent="Weather"]
-
-[node name="Rain" type="Node" parent="Weather"]
-
-[node name="Snow" type="Node" parent="Weather/Rain"]
-
-[node name="Lightning" type="Node" parent="Weather/Rain"]
 
 [node name="User" type="Node" parent="."]
 
@@ -85,11 +75,29 @@ far = 8192.0
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-mesh = SubResource( 2 )
-material/0 = ExtResource( 8 )
-
 [node name="Magic" type="Node" parent="."]
 
 [node name="Runes" type="Node" parent="Magic"]
 script = ExtResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+visible = false
+mesh = SubResource( 2 )
+material/0 = ExtResource( 8 )
+
+[node name="Weather" type="Node" parent="."]
+
+[node name="Wind" type="Node" parent="Weather"]
+
+[node name="Rain" type="Node" parent="Weather"]
+
+[node name="Snow" type="Node" parent="Weather/Rain"]
+
+[node name="Lightning" type="Node" parent="Weather/Rain"]
+
+[node name="Plants" type="Node" parent="."]
+
+[node name="Fern" type="Node" parent="Plants"]
+
+[node name="L-system" type="Node" parent="Plants"]
+script = ExtResource( 11 )
