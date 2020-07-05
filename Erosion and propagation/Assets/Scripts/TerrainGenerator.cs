@@ -233,7 +233,7 @@ public class TerrainGenerator : MonoBehaviour {
         meshFilter.sharedMesh = mesh;
     }
     public Coord CoordFromPoint(Vector2 point)//world to local
-    {//not sure if they want local between 0 and 40 or 1500
+    {//not sure if they want local between 0 and 40 or 1500 e.g inputting -19.99 gets 0.375
         //float x = (point.x / size + 0.5f) * (mapSize - 1f);
         //float y = (point.y / size + 0.5f) * (mapSize - 1f);
         float x = (mapSize / size) * (point.x + size / 2);
@@ -247,7 +247,7 @@ public class TerrainGenerator : MonoBehaviour {
      * (mapSize/size) * (point + size/2)
     */
     public Vector2 PosFromCoord(Coord coord)
-    {// so, this should be between map[x,y] (0-1500) to the world coordinates, and this should work
+    {// so, this should be between map[x,y] (0-1500) to the world coordinates, and this should work inputting 0.375 gives -19.99
         //float x = (coord.x / (mapSize - 1f) - 0.5f) * size;
         //float y = (coord.y / (mapSize - 1f) - 0.5f) * size;
         float x = ((size * 1) / mapSize * coord.x) - (size/2);
@@ -282,10 +282,10 @@ public class TerrainGenerator : MonoBehaviour {
         Vector2 posNE = PosFromCoord(coordNE);
         Vector2 posSW = PosFromCoord(coordSW);
         Vector2 posSE = PosFromCoord(coordSE);
-        float heightNW = maps[coordNW.x, coordNW.y];
-        float heightNE = maps[coordNE.x, coordNE.y];
-        float heightSW = maps[coordSW.x, coordSW.y];
-        float heightSE = maps[coordSE.x, coordSE.y];
+        float heightNW = maps[coordNW.x, coordNW.y] * 10;
+        float heightNE = maps[coordNE.x, coordNE.y] * 10;
+        float heightSW = maps[coordSW.x, coordSW.y] * 10;
+        float heightSE = maps[coordSE.x, coordSE.y] * 10;
 
         // Calculate offset inside the cell (0,0) = at NW node, (1,1) = at SE node
         float x = Mathf.InverseLerp(posNW.x, posNE.x, point.x);
