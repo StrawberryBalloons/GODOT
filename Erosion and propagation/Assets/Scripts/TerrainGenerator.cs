@@ -35,8 +35,7 @@ public class TerrainGenerator : MonoBehaviour {
     float[] map;
     Mesh mesh;
     int mapSizeWithBorder;
-    //added
-    bool needsUpdate; 
+    
 
    [HideInInspector]
     float size = 40;
@@ -45,6 +44,7 @@ public class TerrainGenerator : MonoBehaviour {
 
     MeshRenderer meshRenderer;
     MeshFilter meshFilter;
+    MeshCollider meshCollider;
 
     [SerializeField, HideInInspector]
     GameObject meshHolder;
@@ -62,7 +62,7 @@ public class TerrainGenerator : MonoBehaviour {
         maps = new float[mapSize, mapSize];
         GenerateHeightMap();
         ContructMesh();
-        needsUpdate = false;
+        //needsUpdate = false;
         for (int y = 0; y < mapSize; y++)
         {
             for (int x = 0; x < mapSize; x++)
@@ -219,7 +219,10 @@ public class TerrainGenerator : MonoBehaviour {
             meshHolder.transform.localPosition = Vector3.zero;
             meshHolder.transform.localRotation = Quaternion.identity;
         }
-
+        if (meshHolder.gameObject.GetComponent<MeshCollider>())
+        {
+            DestroyImmediate(meshHolder.GetComponent<MeshCollider>());
+        }
         // Ensure mesh renderer and filter components are assigned
         if (!meshHolder.gameObject.GetComponent<MeshFilter> ()) {
             meshHolder.gameObject.AddComponent<MeshFilter> ();
@@ -227,10 +230,14 @@ public class TerrainGenerator : MonoBehaviour {
         if (!meshHolder.GetComponent<MeshRenderer> ()) {
             meshHolder.gameObject.AddComponent<MeshRenderer> ();
         }
-
+        if (!meshHolder.gameObject.GetComponent<MeshCollider>())
+        {
+            meshHolder.gameObject.AddComponent<MeshCollider>();
+        }
         meshRenderer = meshHolder.GetComponent<MeshRenderer> ();
         meshFilter = meshHolder.GetComponent<MeshFilter> ();
-        meshFilter.sharedMesh = mesh;
+        //meshCollider = meshHolder.GetComponent<MeshCollider>();
+        meshHolder.GetComponent<MeshCollider>().sharedMesh = meshFilter.mesh;
     }
     public Coord CoordFromPoint(Vector2 point)//world to local
     {//not sure if they want local between 0 and 40 or 1500 e.g inputting -19.99 gets 0.375
@@ -264,13 +271,8 @@ public class TerrainGenerator : MonoBehaviour {
 */
     public float GetHeight(Vector2 point)
     {
-        if (maps == null)
-        {
-            needsUpdate = true;
-            Generate();
-        }
 
-        Coord coordNW = CoordFromPoint(point);
+        /*Coord coordNW = CoordFromPoint(point);
         coordNW.x = Mathf.Clamp(coordNW.x, 0, mapSize - 2);
         coordNW.y = Mathf.Clamp(coordNW.y, 0, mapSize - 2);
 
@@ -290,19 +292,32 @@ public class TerrainGenerator : MonoBehaviour {
         // Calculate offset inside the cell (0,0) = at NW node, (1,1) = at SE node
         float x = Mathf.InverseLerp(posNW.x, posNE.x, point.x);
         float y = Mathf.InverseLerp(posNW.y, posSW.y, point.y);
-        float height = heightNW * (1 - x) * (1 - y) + heightNE * x * (1 - y) + heightSW * (1 - x) * y + heightSE * x * y;
+        float height = heightNW * (1 - x) * (1 - y) + heightNE * x * (1 - y) + heightSW * (1 - x) * y + heightSE * x * y;*/
+        float height = heightCast(point);
+        Debug.Log(height + " The Height");
         return height;
-
     }
 
+    private float heightCast(Vector2 point)
+    {
+        int layerMask = 1 << 8;
+        RaycastHit hit;
+        Vector3 abovePoint = new Vector3(point.x, 10, point.y);
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(abovePoint, Vector3.down, out hit, 10, layerMask))
+        {
+            //Debug.DrawRay(abovePoint, Vector3.down * hit.distance, Color.green);
+            return hit.point.y;
+        }
+        else
+        {
+            //Debug.DrawRay(abovePoint, Vector3.down * 10, Color.red);
+            return 0f;
+        }
+    }
 
     public TerrainPointInfo Raycast(Vector2 point)
     {
-        if (maps == null)
-        {
-            needsUpdate = true;
-            Generate();
-        }
 
         Coord coordNW = CoordFromPoint(point);
         coordNW.x = Mathf.Clamp(coordNW.x, 0, mapSize - 2);
@@ -317,27 +332,29 @@ public class TerrainGenerator : MonoBehaviour {
         Vector2 posSW = PosFromCoord(coordSW);
         Vector2 posSE = PosFromCoord(coordSE);
 
-        float heightNW = maps[coordNW.x, coordNW.y];
-        float heightNE = maps[coordNE.x, coordNE.y];
-        float heightSW = maps[coordSW.x, coordSW.y];
-        float heightSE = maps[coordSE.x, coordSE.y];
+        //float heightNW = map[coordNW.x * coordNW.y];
+        float heightNW = heightCast(new Vector2(coordNW.x, coordNW.y));
+        float heightNE = heightCast(new Vector2(coordNE.x, coordNE.y));
+        float heightSW = heightCast(new Vector2(coordSW.x, coordSW.y));
+        float heightSE = heightCast(new Vector2(coordSE.x, coordSE.y));
 
-        //Debug.DrawRay (new Vector3 (posNW.x, heightNW, posNW.y), Vector3.up, Color.red);
-        //Debug.DrawRay (new Vector3 (posNE.x, heightNE, posNE.y), Vector3.up);
-        //Debug.DrawRay (new Vector3 (posSW.x, heightSW, posSW.y), Vector3.up);
-        //Debug.DrawRay (new Vector3 (posSE.x, heightSE, posSE.y), Vector3.up);
+        Debug.DrawRay (new Vector3 (posNW.x, heightNW, posNW.y), Vector3.up, Color.red);
+        Debug.DrawRay (new Vector3 (posNE.x, heightNE, posNE.y), Vector3.up);
+        Debug.DrawRay (new Vector3 (posSW.x, heightSW, posSW.y), Vector3.up);
+        Debug.DrawRay (new Vector3 (posSE.x, heightSE, posSE.y), Vector3.up);
 
-        Vector3 normalNW = normalsMap[coordNW.x, coordNW.y];
+
+        /*Vector3 normalNW = normalsMap[coordNW.x, coordNW.y];
         Vector3 normalNE = normalsMap[coordNE.x, coordNE.y];
         Vector3 normalSW = normalsMap[coordSW.x, coordSW.y];
-        Vector3 normalSE = normalsMap[coordSE.x, coordSE.y];
+        Vector3 normalSE = normalsMap[coordSE.x, coordSE.y];*/
 
         // Calculate offset inside the cell (0,0) = at NW node, (1,1) = at SE node
         float x = Mathf.InverseLerp(posNW.x, posNE.x, point.x);
         float y = Mathf.InverseLerp(posNW.y, posSW.y, point.y);
         float height = heightNW * (1 - x) * (1 - y) + heightNE * x * (1 - y) + heightSW * (1 - x) * y + heightSE * x * y;
-        Vector3 normal = normalNW * (1 - x) * (1 - y) + normalNE * x * (1 - y) + normalSW * (1 - x) * y + normalSE * x * y;
-        return new TerrainPointInfo(height, normal);
+        //Vector3 normal = normalNW * (1 - x) * (1 - y) + normalNE * x * (1 - y) + normalSW * (1 - x) * y + normalSE * x * y;
+        return new TerrainPointInfo(height, new Vector3(1,1,1));
     }
 
 

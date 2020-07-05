@@ -75,7 +75,7 @@ public class Garden : MonoBehaviour {
                 DrawProjectedLineGizmo (startY, endY);
             }
             //Gizmos.DrawRay (topLeft + Vector3.forward * x / (float) numDivisions * boundsSize, Vector3.right * boundsSize);
-            // Gizmos.DrawRay (topLeft + Vector3.right * x / (float) numDivisions * boundsSize, Vector3.forward * boundsSize);
+            //Gizmos.DrawRay (topLeft + Vector3.right * x / (float) numDivisions * boundsSize, Vector3.forward * boundsSize);
         }
     }
 
