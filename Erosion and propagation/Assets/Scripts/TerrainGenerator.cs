@@ -37,8 +37,9 @@ public class TerrainGenerator : MonoBehaviour {
     int mapSizeWithBorder;
     //added
     bool needsUpdate; 
-   // public int mapSize = 100; was resolution
-    public float size = 1;
+
+   [HideInInspector]
+    float size = 40;
     float[,] maps;
     Vector3[,] normalsMap;
 
@@ -231,6 +232,36 @@ public class TerrainGenerator : MonoBehaviour {
         meshFilter = meshHolder.GetComponent<MeshFilter> ();
         meshFilter.sharedMesh = mesh;
     }
+    public Coord CoordFromPoint(Vector2 point)//world to local
+    {//not sure if they want local between 0 and 40 or 1500
+        //float x = (point.x / size + 0.5f) * (mapSize - 1f);
+        //float y = (point.y / size + 0.5f) * (mapSize - 1f);
+        float x = (mapSize / size) * (point.x + size / 2);
+        float y = (mapSize / size) * (point.y + size / 2);
+        return new Coord((int)(x), (int)(y));
+    }
+    /* point + (size/2) gets a value between 0 and size
+     * mapsize / size = 37.5 -> 37.5 * 40 = 1500
+     * 37.5 * (point + size/2) will give a value between 0 and 1500
+     * This means the full equation is:
+     * (mapSize/size) * (point + size/2)
+    */
+    public Vector2 PosFromCoord(Coord coord)
+    {// so, this should be between map[x,y] (0-1500) to the world coordinates, and this should work
+        //float x = (coord.x / (mapSize - 1f) - 0.5f) * size;
+        //float y = (coord.y / (mapSize - 1f) - 0.5f) * size;
+        float x = ((size * 1) / mapSize * coord.x) - (size/2);
+        float y = ((size * 1) / mapSize * coord.y) - (size/2);
+        return new Vector2(x, y);
+    }
+    /*
+* The distance between corners is 40
+* the map size is X, currently set at 1500
+* that means there are 1500 local points over the 40 world points
+* (size * scale / mapSize * coord.?) - (size/2)
+* the size to mapsize gets modifier, multiply to coord to get the value of coordinate to world position
+* minus it by half the size because it sets on the middle of 0,0
+*/
     public float GetHeight(Vector2 point)
     {
         if (maps == null)
@@ -309,18 +340,7 @@ public class TerrainGenerator : MonoBehaviour {
         return new TerrainPointInfo(height, normal);
     }
 
-    public Coord CoordFromPoint(Vector2 point)
-    {
-        float x = (point.x / size + 0.5f) * (mapSize - 1f);
-        float y = (point.y / size + 0.5f) * (mapSize - 1f);
-        return new Coord((int)(x), (int)(y));
-    }
-    public Vector2 PosFromCoord(Coord coord)
-    {
-        float x = (coord.x / (mapSize - 1f) - 0.5f) * size;
-        float y = (coord.y / (mapSize - 1f) - 0.5f) * size;
-        return new Vector2(x, y);
-    }
+
 
     public struct Coord
     {

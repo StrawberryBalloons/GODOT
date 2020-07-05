@@ -25,7 +25,6 @@ public class Garden : MonoBehaviour {
         }
         terrainObj = FindObjectOfType<TerrainGenerator>().getInstance();
         terrain = terrainObj.GetComponent<TerrainGenerator>();
-        boundsSize = terrain.mapSize / 30;
     }
 
     public void AddPlant (Plant plant) {//doesn't add plant to scene
