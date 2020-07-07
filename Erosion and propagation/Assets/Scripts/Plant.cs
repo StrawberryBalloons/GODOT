@@ -7,13 +7,10 @@ public class Plant : MonoBehaviour {
     public enum PlantType { Daffodil, BleedingHeart, Foxglove, LilyOfTheValley }
     public PlantType plantType;
 
-    const int daffodilBeeLimit = 15;
-    const int foxgloveBeesPerMinute = 10;
 
     public string plantName;
     public MeshRenderer stem;
-
-    public Transform[] pollinationPoints;
+    public Seed seeds;
 
     public float growTime = 2;
     public float flowerGrowTime = 1;
@@ -23,17 +20,19 @@ public class Plant : MonoBehaviour {
     public float[] flowerStartGrowTime;
 
     [Header ("Info")]
-    public int numBeesAttracted;
 
     Material stemMat;
     float growthPercent;
+    float seedGrowthPercent;
 
     bool growing;
-    //BeeSpawner beeSpawner;
-    float nextAttractBeeTime;
+
+    TerrainGenerator terrain;
 
     void Start () {
         stemMat = stem.material;
+
+        terrain = FindObjectOfType<TerrainGenerator>();
 
         growing = true;
 
@@ -43,8 +42,6 @@ public class Plant : MonoBehaviour {
         for (int i = 0; i < flowers.Length; i++) {
             flowers[i].localScale = Vector3.zero;
         }
-
-        //beeSpawner = FindObjectOfType<BeeSpawner> ();
     }
 
     void Update () {
@@ -63,16 +60,29 @@ public class Plant : MonoBehaviour {
                 }
             }
 
+
+
             // Finished growing
             if (!growing) {
+                
                 FindObjectOfType<Garden> ().AddPlant (this);
             }
-        } else {
-            
-            if (Time.time > nextAttractBeeTime && numBeesAttracted < daffodilBeeLimit) {
-                nextAttractBeeTime = Time.time + Random.Range (3, 8);
-                numBeesAttracted++;
-                //beeSpawner.SpawnBee ();
+        } else if (!growing){
+            seedGrowthPercent += Time.deltaTime / (growTime * (Random.Range(4f, 5f)));
+            if (seedGrowthPercent > 0.99)
+            {
+                Vector3 spawnPos = transform.position;
+                spawnPos.y += 0.5f;
+                
+                float terrainHeight = terrain.GetHeight(new Vector2(spawnPos.x, spawnPos.z));
+                //Debug.Log("plant transform " + transform.position);
+                //Debug.Log("seed transform " + spawnPos);
+                if (spawnPos.y > terrainHeight)
+                {
+                    var seed = Instantiate(seeds, spawnPos, Random.rotation);
+                    seed.Throw(-1);
+                }
+                seedGrowthPercent = 0;
             }
         }
     }

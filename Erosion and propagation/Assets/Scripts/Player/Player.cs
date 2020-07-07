@@ -12,7 +12,6 @@ public class Player : MonoBehaviour {
     public GameObject plantPrefab;
     public Transform plantHandPos;
 
-    public int numSpiderSouls { get; private set; }
 
     TerrainGenerator terrain;
     FPSController controller;
@@ -94,7 +93,4 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void SpiderKilled () {
-        numSpiderSouls++;
-    }
 }

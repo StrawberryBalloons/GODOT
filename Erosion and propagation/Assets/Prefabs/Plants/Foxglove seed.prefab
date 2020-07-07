@@ -93,4 +93,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwForceMinMax: {x: 4.5, y: 5.5}
-  plantPrefab: {fileID: 0}
+  plantPrefab: {fileID: 5351615316752279036, guid: 509dbb1b7288643ddb06a2246e4ad973,
+    type: 3}

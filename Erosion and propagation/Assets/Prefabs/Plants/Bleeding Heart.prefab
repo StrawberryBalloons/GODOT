@@ -676,7 +676,7 @@ MonoBehaviour:
   plantType: 1
   plantName: Bleeding Heart
   stem: {fileID: 3710012943644132432}
-  pollinationPoints: []
+  seeds: {fileID: 8721215480957499273, guid: 617692e42ffa9429f94b36ca3d0e583e, type: 3}
   growTime: 3
   flowerGrowTime: 1
   flowers:
@@ -719,7 +719,6 @@ MonoBehaviour:
   - 0.12
   - 0.24
   - 0.16
-  numBeesAttracted: 0
 --- !u!1 &4343163965913962006
 GameObject:
   m_ObjectHideFlags: 0

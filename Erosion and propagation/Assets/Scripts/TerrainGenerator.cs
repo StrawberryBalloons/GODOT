@@ -241,8 +241,6 @@ public class TerrainGenerator : MonoBehaviour {
     }
     public Coord CoordFromPoint(Vector2 point)//world to local
     {//not sure if they want local between 0 and 40 or 1500 e.g inputting -19.99 gets 0.375
-        //float x = (point.x / size + 0.5f) * (mapSize - 1f);
-        //float y = (point.y / size + 0.5f) * (mapSize - 1f);
         float x = (mapSize / size) * (point.x + size / 2);
         float y = (mapSize / size) * (point.y + size / 2);
         return new Coord((int)(x), (int)(y));
@@ -255,8 +253,6 @@ public class TerrainGenerator : MonoBehaviour {
     */
     public Vector2 PosFromCoord(Coord coord)
     {// so, this should be between map[x,y] (0-1500) to the world coordinates, and this should work inputting 0.375 gives -19.99
-        //float x = (coord.x / (mapSize - 1f) - 0.5f) * size;
-        //float y = (coord.y / (mapSize - 1f) - 0.5f) * size;
         float x = ((size * 1) / mapSize * coord.x) - (size/2);
         float y = ((size * 1) / mapSize * coord.y) - (size/2);
         return new Vector2(x, y);
@@ -271,30 +267,7 @@ public class TerrainGenerator : MonoBehaviour {
 */
     public float GetHeight(Vector2 point)
     {
-
-        /*Coord coordNW = CoordFromPoint(point);
-        coordNW.x = Mathf.Clamp(coordNW.x, 0, mapSize - 2);
-        coordNW.y = Mathf.Clamp(coordNW.y, 0, mapSize - 2);
-
-        Coord coordNE = coordNW + new Coord(1, 0);
-        Coord coordSW = coordNW + new Coord(0, 1);
-        Coord coordSE = coordSW + new Coord(1, 0);
-
-        Vector2 posNW = PosFromCoord(coordNW);
-        Vector2 posNE = PosFromCoord(coordNE);
-        Vector2 posSW = PosFromCoord(coordSW);
-        Vector2 posSE = PosFromCoord(coordSE);
-        float heightNW = maps[coordNW.x, coordNW.y] * 10;
-        float heightNE = maps[coordNE.x, coordNE.y] * 10;
-        float heightSW = maps[coordSW.x, coordSW.y] * 10;
-        float heightSE = maps[coordSE.x, coordSE.y] * 10;
-
-        // Calculate offset inside the cell (0,0) = at NW node, (1,1) = at SE node
-        float x = Mathf.InverseLerp(posNW.x, posNE.x, point.x);
-        float y = Mathf.InverseLerp(posNW.y, posSW.y, point.y);
-        float height = heightNW * (1 - x) * (1 - y) + heightNE * x * (1 - y) + heightSW * (1 - x) * y + heightSE * x * y;*/
         float height = heightCast(point);
-        Debug.Log(height + " The Height");
         return height;
     }
 
@@ -302,7 +275,7 @@ public class TerrainGenerator : MonoBehaviour {
     {
         int layerMask = 1 << 8;
         RaycastHit hit;
-        Vector3 abovePoint = new Vector3(point.x, 10, point.y);
+        Vector3 abovePoint = new Vector3(point.x, 7, point.y);
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(abovePoint, Vector3.down, out hit, 10, layerMask))
         {
@@ -317,7 +290,7 @@ public class TerrainGenerator : MonoBehaviour {
     }
 
     public TerrainPointInfo Raycast(Vector2 point)
-    {
+    {//get the normal, the direction the ground selected faces
 
         Coord coordNW = CoordFromPoint(point);
         coordNW.x = Mathf.Clamp(coordNW.x, 0, mapSize - 2);
@@ -343,22 +316,13 @@ public class TerrainGenerator : MonoBehaviour {
         Debug.DrawRay (new Vector3 (posSW.x, heightSW, posSW.y), Vector3.up);
         Debug.DrawRay (new Vector3 (posSE.x, heightSE, posSE.y), Vector3.up);
 
-
-        /*Vector3 normalNW = normalsMap[coordNW.x, coordNW.y];
-        Vector3 normalNE = normalsMap[coordNE.x, coordNE.y];
-        Vector3 normalSW = normalsMap[coordSW.x, coordSW.y];
-        Vector3 normalSE = normalsMap[coordSE.x, coordSE.y];*/
-
         // Calculate offset inside the cell (0,0) = at NW node, (1,1) = at SE node
         float x = Mathf.InverseLerp(posNW.x, posNE.x, point.x);
         float y = Mathf.InverseLerp(posNW.y, posSW.y, point.y);
         float height = heightNW * (1 - x) * (1 - y) + heightNE * x * (1 - y) + heightSW * (1 - x) * y + heightSE * x * y;
         //Vector3 normal = normalNW * (1 - x) * (1 - y) + normalNE * x * (1 - y) + normalSW * (1 - x) * y + normalSE * x * y;
-        return new TerrainPointInfo(height, new Vector3(1,1,1));
+        return new TerrainPointInfo(height, new Vector3(0,0,0));
     }
-
-
-
     public struct Coord
     {
         public int x;

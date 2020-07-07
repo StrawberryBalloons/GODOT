@@ -80,7 +80,7 @@ MonoBehaviour:
   plantType: 0
   plantName: Daffodil
   stem: {fileID: 8375354882813839926}
-  pollinationPoints: []
+  seeds: {fileID: 91428541610924232, guid: fa80c1868079d4218bad6fd57faa71d0, type: 3}
   growTime: 2
   flowerGrowTime: 1
   flowers:
@@ -97,7 +97,6 @@ MonoBehaviour:
   - 0.95
   - 0.9
   - 0.94
-  numBeesAttracted: 0
 --- !u!1 &6636216119680941410
 GameObject:
   m_ObjectHideFlags: 0

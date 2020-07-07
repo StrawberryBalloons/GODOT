@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Seed : MonoBehaviour {
 
-    public Vector2 throwForceMinMax = new Vector2 (4.5f, 5.5f);
+    public Vector2 throwForceMinMax = new Vector2 (2.5f, 5.5f);
     public const float gravity = 10;
 
     public Plant plantPrefab;

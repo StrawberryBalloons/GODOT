@@ -27,7 +27,7 @@ public class Garden : MonoBehaviour {
         terrain = terrainObj.GetComponent<TerrainGenerator>();
     }
 
-    public void AddPlant (Plant plant) {//doesn't add plant to scene
+    public void AddPlant (Plant plant) {//doesn't add plant to scene, adds to a data holder
         float posX = plant.transform.position.x;
         float posY = plant.transform.position.z;
 
@@ -60,7 +60,6 @@ public class Garden : MonoBehaviour {
             terrain = terrainObj.GetComponent<TerrainGenerator>();
         }
         Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireCube (Vector3.up * transform.position.y, new Vector3 (boundsSize, 0, boundsSize));
         Vector3 topLeft = Vector3.left * boundsSize / 2 + Vector3.forward * -boundsSize / 2 + Vector3.up * transform.position.y;
         int numSteps = 30;
         for (int x = 1; x < numDivisions; x++) {
@@ -74,8 +73,6 @@ public class Garden : MonoBehaviour {
                 Vector3 endY = topLeft + Vector3.right * x / (float) numDivisions * boundsSize + Vector3.forward * boundsSize * p2;
                 DrawProjectedLineGizmo (startY, endY);
             }
-            //Gizmos.DrawRay (topLeft + Vector3.forward * x / (float) numDivisions * boundsSize, Vector3.right * boundsSize);
-            //Gizmos.DrawRay (topLeft + Vector3.right * x / (float) numDivisions * boundsSize, Vector3.forward * boundsSize);
         }
     }
 
@@ -85,7 +82,7 @@ public class Garden : MonoBehaviour {
         float h2 = terrain.GetHeight (new Vector2 (b.x, b.z)) + height;
         Gizmos.DrawLine (new Vector3 (a.x, h1, a.z), new Vector3 (b.x, h2, b.z));
     }
-
+    // SHOULD STORE HEIGHT IN SCRIPT TO MAKE THEM EASIER TO ACCESS, RAYCAST ONCE AND THEN CALL LATER ON, UPDATE ON CHANGE
     void OnDrawGizmosSelected () {
         if (gizmosOnlyWhenSelected) {
             DrawGizmos ();

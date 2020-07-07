@@ -2209,7 +2209,7 @@ MonoBehaviour:
   plantType: 2
   plantName: Foxglove
   stem: {fileID: 5912655368716084828}
-  pollinationPoints: []
+  seeds: {fileID: 6905996977963606279, guid: 7b5776a7f7e5140b8953ecc1e98ad1bb, type: 3}
   growTime: 5
   flowerGrowTime: 1
   flowers:
@@ -2270,7 +2270,6 @@ MonoBehaviour:
   - 0.01
   - 0.11
   - 0.01
-  numBeesAttracted: 0
 --- !u!1 &7869746209488248909
 GameObject:
   m_ObjectHideFlags: 0

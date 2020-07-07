@@ -81,7 +81,7 @@ MonoBehaviour:
   plantType: 3
   plantName: Lily Of The Valley
   stem: {fileID: 8194909871441451397}
-  pollinationPoints: []
+  seeds: {fileID: 420406205131491818, guid: 5d55ff21e03ed4c61bd075be3831ce86, type: 3}
   growTime: 2
   flowerGrowTime: 1
   flowers:
@@ -120,7 +120,6 @@ MonoBehaviour:
   - 0.81
   - 0.71
   - 0.78
-  numBeesAttracted: 0
 --- !u!1 &2569912729661646336
 GameObject:
   m_ObjectHideFlags: 0

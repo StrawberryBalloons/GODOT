@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Garden.cs" />
     <Compile Include="Assets\Scripts\HeightMapGenerator.cs" />
     <Compile Include="Assets\Scripts\Plant.cs" />
+    <Compile Include="Assets\Scripts\PlantSeed.cs" />
     <Compile Include="Assets\Scripts\Player\FPSController.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Seed.cs" />
