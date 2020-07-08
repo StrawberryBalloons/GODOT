@@ -291,6 +291,12 @@ public class TerrainGenerator : MonoBehaviour {
 
     public TerrainPointInfo Raycast(Vector2 point)
     {//get the normal, the direction the ground selected faces
+        /*
+         *  Vector3 incomingVec = hit.point - gunObj.position;
+
+                // Use the point's normal to calculate the reflection vector.
+                Vector3 reflectVec = Vector3.Reflect(incomingVec, hit.normal);
+         * */
 
         Coord coordNW = CoordFromPoint(point);
         coordNW.x = Mathf.Clamp(coordNW.x, 0, mapSize - 2);
@@ -323,6 +329,7 @@ public class TerrainGenerator : MonoBehaviour {
         //Vector3 normal = normalNW * (1 - x) * (1 - y) + normalNE * x * (1 - y) + normalSW * (1 - x) * y + normalSE * x * y;
         return new TerrainPointInfo(height, new Vector3(0,0,0));
     }
+    //https://www.reddit.com/r/robloxgamedev/comments/asr5t1/is_it_possible_to_detect_a_terrain_material_with/
     public struct Coord
     {
         public int x;
