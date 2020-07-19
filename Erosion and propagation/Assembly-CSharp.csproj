@@ -62,15 +62,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Erosion.cs" />
+    <Compile Include="Assets\Scripts\Flora\Plant.cs" />
+    <Compile Include="Assets\Scripts\Flora\PlantSeed.cs" />
+    <Compile Include="Assets\Scripts\Flora\Seed.cs" />
     <Compile Include="Assets\Scripts\Garden.cs" />
-    <Compile Include="Assets\Scripts\HeightMapGenerator.cs" />
-    <Compile Include="Assets\Scripts\Plant.cs" />
-    <Compile Include="Assets\Scripts\PlantSeed.cs" />
     <Compile Include="Assets\Scripts\Player\FPSController.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
-    <Compile Include="Assets\Scripts\Seed.cs" />
-    <Compile Include="Assets\Scripts\TerrainGenerator.cs" />
+    <Compile Include="Assets\Scripts\SuperScripts\DrawEditor.cs" />
+    <Compile Include="Assets\Scripts\Terrain\DrawHeightMap.cs" />
+    <Compile Include="Assets\Scripts\Terrain\Erosion.cs" />
+    <Compile Include="Assets\Scripts\Terrain\HeightMapGenerator.cs" />
+    <Compile Include="Assets\Scripts\Terrain\TerrainGenerator.cs" />
+    <Compile Include="Assets\Scripts\Terrain\VoronoiMapGenerator.cs" />
     <None Include="Assets\Shaders\PlantStem.shader" />
     <None Include="Assets\Scripts\ComputeShaders\HeightMap.compute" />
     <None Include="Assets\Shaders\Terrain.shader" />
